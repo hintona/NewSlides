@@ -1,0 +1,127 @@
+<MyLayout>
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        BoxLayout:
+            font_size: 65
+            size_hint: (1, .27)
+            BoxLayout:
+                size_hint: (.15, 1)
+                BoxLayout:
+                    size_hint: (.3,1)
+                    Image:
+                        source: "images/wifi_signal.png"
+                GridLayout:
+                    cols: 2
+                    rows: 2
+                    size_hint: (.7, 1)
+                    spacing: 10
+                    padding: 10
+                    RoundedButton:
+                        text: "Save"
+                    RoundedButton:
+                        text: "Load"
+                    RoundedButton:
+                        text: "Undo"
+                    RoundedButton:
+                        text: "Redo"
+            GridLayout:
+                size_hint: (.15, 1)
+                rows: 3
+                cols: 1
+                padding: 5
+                spacing: 10
+                RoundedButton:
+                    text: "Settings"
+                RoundedButton:
+                    text: "Slide Count: 0"
+                RoundedButton:
+                    text: "Set Presentation"
+            BoxLayout:
+                size_hint: (.35, 1)
+                Button:
+                    text: "Hello"
+                #GridLayout:
+                    #Button:
+                        #size_hint: (1, 0.2)
+                        #pos_hint: {"top": 1}
+                        #text_size: self.size
+                        #text: "Insert"
+                        #halign: "left"
+                    #GridLayout:
+                        #spacing: 10
+                        #cols: 6
+                        #rows: 1
+                        #Button:
+                            #text: "Text"
+                        #Button:
+                            #text: "Image"
+                        #Button:
+                            #text: "Video"
+                        #Button:
+                            #text: "SoundEffects"
+                        #Button:
+                            #text: "Equation"
+                        #Button:
+                            #text: "PythonCode"
+            BoxLayout:
+                size_hint: (.35, 1)
+                spacing: 10
+                GridLayout:
+                    padding: 5
+                    spacing: 10
+                    cols: 1
+                    rows: 3
+                    size_hint: (.4, 1)
+                    Button:
+                        text: "Slide"
+                        halign: "left"
+                    RoundedButton:
+                        text: "Templates"
+                    RoundedButton:
+                        text: "Background"
+                GridLayout:
+                    padding: 5
+                    spacing: 10
+                    cols: 1
+                    rows: 3
+                    size_hint: (.6, 1)
+                    Button:
+                        size_hint: (1, .25)
+                        text_size: self.size
+                        text: "Include Page Count"
+                        halign: "left"
+                    RoundedButton:
+                        text: "Present"
+        BoxLayout:
+            BoxLayout:
+                size_hint: (.2, 1)
+                FloatLayout:
+                    Button:
+                        size_hint: (1,.1)
+                        pos_hint: {"top": 1}
+                        text: "New Slide +"
+                        on_press: root.newSlide()
+                    GridLayout:
+                        cols: 1
+                        id: slides
+                        size_hint: (1, .9)
+
+            BoxLayout:
+                size_hint: (.8, 1)
+                Button:
+                    text: "HELLO"
+
+
+<RoundedButton@Button>
+    background_color: (0,0,0,0)
+    background_normal: ""
+    canvas.before:
+        Color:
+            rgba: (24/255,69/255,233/255, 1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [20]
+
+<Slide>
