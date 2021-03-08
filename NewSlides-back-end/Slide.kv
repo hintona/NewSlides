@@ -1,0 +1,17 @@
+<Slide>
+    GridLayout:
+        cols: 2
+        size: root.width, root.height
+        Image:
+            source: 'images\MLG_Glasses.png'
+        GridLayout:
+            rows: 2
+            orientation: 'tb-rl'
+            Button:
+                text: 'AddText'
+                on_press:
+                    root.AddText()
+            Button:
+                text: 'Save'
+                on_press:
+                    root.save()
