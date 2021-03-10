@@ -20,17 +20,24 @@ class Slide(Widget):
     def save(self):
 
         self.export_to_png('oops.png')
-
     def AddText(self):
         floaty = FloatLayout()
         scatter = Scatter()
         AddedText = Label(text='Enter your text here')
+
         TextAddition = TextInput(text='Enter your text here')
+        FontSize = self.ids.FontSize
+        FontSize.bind(text=AddedText.setter("font_size"))
         TextAddition.bind(text=AddedText.setter('text'))
         floaty.add_widget(scatter)
         scatter.add_widget(AddedText)
         self.add_widget(TextAddition)
         self.add_widget(floaty)
+
+
+
+
+
 
 
 

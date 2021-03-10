@@ -5,7 +5,7 @@
         Image:
             source: 'images\MLG_Glasses.png'
         GridLayout:
-            rows: 2
+            rows: 3
             orientation: 'tb-rl'
             Button:
                 text: 'AddText'
@@ -15,3 +15,6 @@
                 text: 'Save'
                 on_press:
                     root.save()
+            TextInput:
+                text: '100'
+                id: FontSize
