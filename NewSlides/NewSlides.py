@@ -27,11 +27,16 @@ class SlideView(GridLayout, Widget):
 
     def removeSlide(self):
         global numSlides
+        global slidesUnselected
         slideView = self.getCountDisplay()
         grid = self.parent
         grid.remove_widget(self)
-        numSlides -= 1
-        slideView.text = "Slide Count: " + str(numSlides)
+        if(self.ids.checkbox.active):
+            numSlides -= 1
+        else:
+            slidesUnselected -= 1
+            numSlides -= 1
+        slideView.text = "Slide Count: " + str(numSlides-slidesUnselected) + "/" + str(numSlides)
         for i in range(len(grid.children)):
             grid.children[len(grid.children)-i-1].ids.count.text = str(i+1)
 
@@ -43,13 +48,13 @@ class SlideView(GridLayout, Widget):
 
     def changeSlideCount(self, checkbox):
         slideView = self.getCountDisplay()
-        global numSlides
+        global slidesUnselected
         if(checkbox.active):
-            numSlides += 1
-            slideView.text = "Slide Count: " + str(numSlides)
+            slidesUnselected -= 1
+            slideView.text = "Slide Count: " + str(numSlides-slidesUnselected) + "/" + str(numSlides)
         else:
-            numSlides -= 1
-            slideView.text = "Slide Count: " + str(numSlides)
+            slidesUnselected += 1
+            slideView.text = "Slide Count: " + str(numSlides-slidesUnselected) + "/" + str(numSlides)
 
     def getCountDisplay(self):
         slideView = self.parent.parent.parent.parent.parent.parent.parent.ids.slideCount
@@ -62,8 +67,10 @@ class MainWindow(Screen, Widget):
         count = self.ids.slideCount
         global numSlides
         numSlides += 1
-        grid.add_widget(SlideView())
-        count.text = "Slide Count: " + str(numSlides)
+        slide = SlideView()
+        grid.add_widget(slide)
+        grid.parent.scroll_to(grid.children[0])
+        count.text = "Slide Count: " + str(numSlides-slidesUnselected) + "/" + str(numSlides)
 
 class MyApp(App):
     def build(self):
@@ -76,4 +83,5 @@ class MyApp(App):
         return ns
 
 numSlides = 0
+slidesUnselected = 0
 MyApp().run()

@@ -93,7 +93,7 @@ WindowManager:
                 spacing: 5
                 FlatButton:
                     id: slideCount
-                    text: "Slide Count: 0"
+                    text: "Slide Count: 0/0"
                     color: 37/255,14/255,98/255,1
             GridLayout:
                 rows: 2
@@ -222,8 +222,8 @@ WindowManager:
                             padding: 5
                             spacing: 5
                             id: slides
-                            height: self.minimum_height
-                            size_hint: (1, .9)
+                            height: 25000
+                            size_hint_y: None
                             row_default_height: 200
             BoxLayout:
                 padding: 10
