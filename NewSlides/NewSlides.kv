@@ -16,34 +16,24 @@ WindowManager:
             text_size: self.size
             halign: "center"
             font_size: 50
-            color: 0,0,1,1
-        FlatButton:
+        FlatButtonLow:
             text: "New"
-            text_size: self.size
-            halign: "center"
-            valign: "bottom"
             font_size: 30
-            color: 0,0,.9,1
+            color: 37/255,14/255,98/255,1
             size_hint: (.2,.2)
             pos: root.width/2-450, root.height/2-300
-            on_press: app.root.buttonAnimInit(self)
-            on_release:
-                root.buttonAnimFin(self)
+            on_press:
                 app.root.current = "main"
             Image:
                 source: "images/new_file.png"
                 center_x: self.parent.center_x
                 center_y: self.parent.center_y
-        FlatButton:
+        FlatButtonLow:
             text: "Open"
-            text_size: self.size
-            halign: "center"
-            valign: "bottom"
             font_size: 30
-            color: 0,0,.9,1
+            color: 37/255,14/255,98/255,1
             size_hint: (.2,.2)
             pos: root.width/2, root.height/2-300
-            on_press: root.buttonAnimInit(self)
             on_release:
                 root.buttonAnimFin(self)
             Image:
@@ -71,26 +61,30 @@ WindowManager:
                     size_hint: (.7, 1)
                     spacing: 10
                     padding: 10
-                    FlatButton:
+                    FlatButtonLow:
                         text: "Save"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
-                    FlatButton:
-                        text: "Load"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
-                    FlatButton:
+                        color: 37/255,14/255,98/255,1
+                        Image:
+                            source: "images/save_icon.png"
+                            center: self.parent.center
+                    FlatButtonLow:
+                        text: "Open"
+                        color: 37/255,14/255,98/255,1
+                        Image:
+                            source: "images/open_icon.png"
+                            center: self.parent.center
+                    FlatButtonLow:
                         text: "Undo"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
-                    FlatButton:
+                        color: 37/255,14/255,98/255,1
+                        Image:
+                            source: "images/undo_icon.png"
+                            center: self.parent.center
+                    FlatButtonLow:
                         text: "Redo"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
+                        color: 37/255,14/255,98/255,1
+                        Image:
+                            source: "images/redo_icon.png"
+                            center: self.parent.center
             GridLayout:
                 size_hint: (.15, 1)
                 rows: 3
@@ -98,14 +92,19 @@ WindowManager:
                 padding: 5
                 spacing: 5
                 FlatButton:
+                    id: slideCount
                     text: "Slide Count: 0"
-                    color: 0,0,.9,1
+                    color: 37/255,14/255,98/255,1
             GridLayout:
                 rows: 2
                 cols: 1
                 size_hint: (.35, 1)
                 padding:10
                 spacing: 10
+                canvas.before:
+                    Line:
+                        rectangle:(self.pos[0]+5, self.pos[1]+10, self.size[0]-15, self.size[1]-15)
+                        width: 1.5
                 Label:
                     size_hint: (1, 0.2)
                     text_size: self.size
@@ -113,43 +112,48 @@ WindowManager:
                     halign: "left"
                     valign: "top"
                     font_size: 30
-                    color: 0,0,1,1
                 GridLayout:
                     padding: 10
                     spacing: 10
                     size_hint: (1,0.8)
                     cols: 6
                     rows: 1
-                    FlatButton:
+                    FlatButtonLow:
                         text: "Text"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
-                    FlatButton:
+                        color: 37/255,14/255,98/255,1
+                        Image:
+                            source: "images/text_icon.png"
+                            center: self.parent.center
+                    FlatButtonLow:
                         text: "Image"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
-                    FlatButton:
+                        color: 37/255,14/255,98/255,1
+                        Image:
+                            source: "images/camera_icon.png"
+                            center: self.parent.center
+                    FlatButtonLow:
                         text: "Video"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
-                    FlatButton:
+                        color: 37/255,14/255,98/255,1
+                        Image:
+                            source: "images/video_icon.png"
+                            center: self.parent.center
+                    FlatButtonLow:
                         text: "SoundEffects"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
-                    FlatButton:
+                        color: 37/255,14/255,98/255,1
+                        Image:
+                            source: "images/sound_icon.png"
+                            center: self.parent.center
+                    FlatButtonLow:
                         text: "Equation"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
-                    FlatButton:
+                        color: 37/255,14/255,98/255,1
+                        Image:
+                            source: "images/equation_icon.png"
+                            center: self.parent.center
+                    FlatButtonLow:
                         text: "PythonCode"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
+                        color: 37/255,14/255,98/255,1
+                        Image:
+                            source: "images/python_icon.png"
+                            center: self.parent.center
             BoxLayout:
                 size_hint: (.35, 1)
                 spacing: 10
@@ -159,6 +163,10 @@ WindowManager:
                     cols: 1
                     rows: 3
                     size_hint: (.4, 1)
+                    canvas.before:
+                        Line:
+                            rectangle:(self.pos[0]+5, self.pos[1]+10, self.size[0]-15, self.size[1]-15)
+                            width: 1.5
                     Label:
                         #padding:10
                         text: "Slide"
@@ -166,17 +174,12 @@ WindowManager:
                         halign: "left"
                         valign: "top"
                         font_size: 30
-                        color: 0,0,1,1
                     FlatButton:
                         text: "Templates"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
+                        color: 37/255,14/255,98/255,1
                     FlatButton:
                         text: "Background"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
+                        color: 37/255,14/255,98/255,1
                 GridLayout:
                     padding: 5
                     spacing: 10
@@ -186,53 +189,60 @@ WindowManager:
                     FlatButton:
                         size_hint: (1, .4)
                         text: "Settings"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
-                    FlatButton:
+                        text_size: self.size
+                        halign: "left"
+                        valign: "center"
+                        color: 37/255,14/255,98/255,1
+                        Image:
+                            source: "images/settings_icon.png"
+                            center: self.parent.center
+                    FlatButtonLow:
                         text: "Present"
-                        color: 0,0,.9,1
-                        on_press: root.buttonAnimInit(self)
-                        on_release: root.buttonAnimFin(self)
+                        color: 37/255,14/255,98/255,1
+                        Image:
+                            source: "images/present_icon.png"
+                            center: self.parent.center
         BoxLayout:
             BoxLayout:
                 size_hint: (.2, 1)
                 FloatLayout:
-                    Button:
+                    FlatButton:
                         size_hint: (1,.1)
                         pos_hint: {"top": 1}
                         text: "New Slide +"
-                        background_color: 0,0,.1,.1
-                        color: 0,0,.9,1
+                        color: 37/255,14/255,98/255,1
                         on_press: root.newSlide()
                     ScrollView:
+                        id: scroll
                         size_hint: (1, .9)
+                        spacing: 5
+                        padding: 5
                         GridLayout:
                             cols: 1
+                            padding: 5
+                            spacing: 5
                             id: slides
                             height: self.minimum_height
-                            #size_hint: (1, .9)
-                            #row_default_height: 200
+                            size_hint: (1, .9)
+                            row_default_height: 200
             BoxLayout:
                 padding: 10
                 size_hint: (.8, 1)
                 TextInput:
                     text: ""
 
-
-<RoundedButton@Button>
-    background_color: (0,0,0,0)
+<FlatButtonLow@Button>
     background_normal: ""
+    text_size: self.size
+    halign: "center"
+    valign: "bottom"
     canvas.before:
         Color:
             rgba: (24/255,69/255,233/255, 1)
-        RoundedRectangle:
-            size: self.size
-            pos: self.pos
-            radius: [20]
+        Line:
+            rectangle:(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
 <FlatButton@Button>
-    background_color: (0,0,0,0)
     background_normal: ""
     canvas.before:
         Color:
@@ -240,11 +250,35 @@ WindowManager:
         Line:
             rectangle:(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
-<Ye>
+<SlideView>
+    cols: 5
+    rows: 1
+    spacing: 5
+    size_hint_y: None
+    height: 200
+    Label:
+        id: count
+        text: root.getSlideCount()
+        size_hint: .05,1
     Button:
-        id: newslide
-        text: "Slide"
-        size_hint_y: None
-        height: 200
-        background_color: 0,0,.1,.1
-        color: 0,0,.9,1
+        text: "slide image"
+        size_hint: .54,1
+    Button:
+        size_hint: .15, 1
+        background_normal: ""
+        on_press: root.duplicateSlide(self)
+        Image:
+            source: "images/duplicate_icon.png"
+            center: self.parent.center
+    Button:
+        size_hint: .15, 1
+        background_normal: ""
+        on_press: root.removeSlide()
+        Image:
+            source: "images/delete_icon.png"
+            center: self.parent.center
+    CheckBox:
+        id: checkbox
+        active: True
+        size_hint: .09,1
+        on_press: root.changeSlideCount(self)
