@@ -1,11 +1,13 @@
 <Slide>
+    id: slide
     GridLayout:
         cols: 2
         size: root.width, root.height
         Image:
+            id: Background
             source: 'images\MLG_Glasses.png'
         GridLayout:
-            rows: 3
+            rows: 4
             orientation: 'tb-rl'
             Button:
                 text: 'AddText'
@@ -16,5 +18,8 @@
                 on_press:
                     root.save()
             TextInput:
-                text: '100'
                 id: FontSize
+                text: '12'
+            FileChooserIconView:
+                id: filechooser
+                on_selection: slide.loadImage(filechooser.selection)

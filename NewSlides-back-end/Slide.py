@@ -14,9 +14,23 @@ from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
+from kivy.core.text import LabelBase
 Builder.load_file("venv/Slide.kv")
+LabelBase.register(name = 'Bengal', fn_bold='fonts/SutonnyMJ_Bold.ttf', fn_regular='fonts/SutonnyMJ_Regular.ttf',
+                   fn_bolditalic="fonts/SutonnyMJ_Bold_Italic.ttf")
 class Slide(Widget):
-
+    def loadImage(self, filename):
+        try:
+            self.add_widget(Image(source = filename[0]))
+        except:
+            print('Error: file not found')
+            pass
+    def loadBackground(self, filename):
+        try:
+            self.ids.Background.source = filename[0]
+        except:
+            print('Error: file not found')
+            pass
     def save(self):
 
         self.export_to_png('oops.png')
@@ -24,7 +38,8 @@ class Slide(Widget):
         floaty = FloatLayout()
         scatter = Scatter()
         AddedText = Label(text='Enter your text here')
-
+        #AddedText.font_name = 'Bengal'
+        AddedText.bold = True
         TextAddition = TextInput(text='Enter your text here')
         FontSize = self.ids.FontSize
         FontSize.bind(text=AddedText.setter("font_size"))
