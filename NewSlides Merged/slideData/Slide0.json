@@ -1,0 +1,18 @@
+{
+  "Scatter": [
+    {
+      "type": "Label",
+      "text": "Enter your text here!",
+      "fontsize": 10
+    },
+    {
+      "type": "Label",
+      "text": "HELLO",
+      "fontsize": 21
+    },
+    {
+      "type": "Image",
+      "source": "C:\\Users\\Karl\\Pictures\\myfaultog.PNG"
+    }
+  ]
+}

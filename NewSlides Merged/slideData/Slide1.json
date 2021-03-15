@@ -1,0 +1,13 @@
+{
+  "Scatter": [
+    {
+      "type": "VideoPlayer",
+      "source": "C:\\Users\\Karl\\Downloads\\d3ac8048903f48d28c6c79c47a1522b2.mp4"
+    },
+    {
+      "type": "Label",
+      "text": "Yo",
+      "fontsize": 21
+    }
+  ]
+}

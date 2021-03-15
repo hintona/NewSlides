@@ -66,13 +66,14 @@ WindowManager:
                     FlatButtonLow:
                         text: "Save"
                         color: 37/255,14/255,98/255,1
-                        on_press: root.save()
+                        on_press: root.saveSlides()
                         Image:
                             source: "images/save_icon.png"
                             center: self.parent.center
                     FlatButtonLow:
                         text: "Open"
                         color: 37/255,14/255,98/255,1
+                        on_release: root.loadSlides()
                         Image:
                             source: "images/open_icon.png"
                             center: self.parent.center
@@ -164,6 +165,7 @@ WindowManager:
                     FlatButtonLow:
                         text: "Video"
                         color: 37/255,14/255,98/255,1
+                        on_release: root.open_popup()
                         Image:
                             source: "images/video_icon.png"
                             center: self.parent.center
@@ -230,6 +232,7 @@ WindowManager:
                     FlatButtonLow:
                         text: "Present"
                         color: 37/255,14/255,98/255,1
+                        on_press: root.present()
                         Image:
                             source: "images/present_icon.png"
                             center: self.parent.center
@@ -312,7 +315,7 @@ WindowManager:
     Button:
         text: "slide image"
         size_hint: .54,1
-        #on_press: root.select()
+        on_press: root.select()
     Button:
         size_hint: .15, 1
         background_normal: ""
@@ -342,8 +345,32 @@ WindowManager:
         FileChooserIconView:
             id: filechooser
             size_hint: 1,0.8
-        Button:
-            text: "Load"
-            on_release: root.load(filechooser.selection)
-            id: ldbtn
-            #disabled: True if filechooser.selection==[] else False
+        BoxLayout:
+            size_hint: 1,.2
+            orientation: "horizontal"
+            Button:
+                text: "Load Image"
+                on_release: root.load(filechooser.selection, "image")
+                id: ldbtn
+                #disabled: True if filechooser.selection==[] else False
+            Button:
+                text: "Load Video"
+                on_release: root.load(filechooser.selection, "video")
+
+<PresentationWindow>
+    id: pWindow
+    auto_dismiss: False
+    title: "Presentation"
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            size_hint: 1,.8
+            id: slideDisplay
+            text: "Slide"
+        BoxLayout:
+            size_hint: 1,.2
+            orientation: "horizontal"
+            Button:
+                text: "Left"
+            Button:
+                text: "Right"
