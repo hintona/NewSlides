@@ -63,7 +63,6 @@ class PresentationWindow(Popup):
         slideDeck[0].y = self.ids.slideDisplay.center[1]+200
         slideDeck[0].x = self.ids.slideDisplay.center[0]+200
         self.slideDeck = self.slideDeck[::-1]
-        self.slideDeck.append(Slide())
         self.ids.slideDisplay.add_widget(self.slideDeck[0])
 
 class soundButton(Button):
@@ -87,6 +86,7 @@ class HomeWindow(Screen, Widget):
 
 class SlideView(GridLayout, Widget):
     slide = None
+    widgets = []
     def setSlide(self, slide):
         self.slide = slide
 
@@ -105,6 +105,8 @@ class SlideView(GridLayout, Widget):
         grid.remove_widget(self)
         print(len(slides))
         if(len(slides)>=1):
+            if(slides[0].parent!=None):
+                slides[0].parent.remove_widget(slides[0])
             slideContainer.add_widget(slides[0])
         if(self.ids.checkbox.active):
             numSlides -= 1
@@ -115,9 +117,15 @@ class SlideView(GridLayout, Widget):
         for i in range(len(grid.children)):
             grid.children[len(grid.children)-i-1].ids.count.text = "Slide " + str(i)
 
+    #def addWidgets(self, list):
+        #for i in range(len(list)):
+            #self.widgets.append(list[i])
+
     def select(self):
         global slides
         global numSlides
+        for i in range(len(self.widgets)):
+            self.slide.add_widget(self.widgets[i])
         slideContainer = self.getSlideContainer()
         if(slides[0]!=self.slide):
             if(numSlides>1):
@@ -170,7 +178,6 @@ class MainWindow(Screen, Widget):
         if(numSlides>1):
             currSlide.remove_widget(slides[1])
         currSlide.add_widget(slide)
-        slide.export_to_png(slideName)
         grid.parent.scroll_to(grid.children[0])
         count.text = "Slide Count: " + str(numSlides-slidesUnselected) + "/" + str(numSlides)
 
@@ -181,9 +188,10 @@ class MainWindow(Screen, Widget):
         grid = self.ids.slides
         count = self.ids.slideCount
         numSlides += 1
+        print(numSlides)
         slideName = "slide"+str(numSlides)+".png"
         slide.slide.pos = currSlide.pos
-        slide.size = currSlide.size
+        slide.slide.size = currSlide.size
         slides.insert(0,slide.slide)
         slideDisplay = slide
         grid.add_widget(slideDisplay)
@@ -192,6 +200,7 @@ class MainWindow(Screen, Widget):
         currSlide.add_widget(slide.slide)
         grid.parent.scroll_to(grid.children[0])
         count.text = "Slide Count: " + str(numSlides-slidesUnselected) + "/" + str(numSlides)
+        print(numSlides)
 
     def present(self):
         slideView = self.ids.slides.children
@@ -245,11 +254,12 @@ class MainWindow(Screen, Widget):
                         currSlide.add_widget(sButton)
             elif (type == "presentation"):
                 print(selection)
-                try:
-                    folder = selection
-                    self.loadSlides(folder)
-                except:
-                    print("Wrong File Format")
+                #try:
+                folder = selection
+                print(folder)
+                self.loadSlides(folder)
+                #except:
+                    #print("Wrong File Format")
 
     def increaseFontSize(self):
         global fontSize
@@ -362,24 +372,23 @@ class MainWindow(Screen, Widget):
                     for y in range(len(keyChildren)):
                         child = keyChildren[y]
                         if(child['type'] == "Label"):
-                            scatter = Scatter(pos = slide.slide.pos)
+                            scatter = Scatter()
                             scatter.add_widget(Label(text=child['text'], font_size=child['fontsize'], color="black"))
                             widget.add_widget(scatter)
                         elif (child['type'] == "Image"):
-                            scatter = Scatter(pos = slide.slide.pos)
+                            scatter = Scatter()
                             scatter.add_widget(Image(source=child['source']))
                             widget.add_widget(scatter)
                         elif (child['type'] == "Video"):
-                            scatter = Scatter(pos = slide.slide.pos)
+                            scatter = Scatter()
                             scatter.add_widget(VideoPlayer(source=child['source']))
                             widget.add_widget(scatter)
                         elif (child['type'] == "Sound"):
-                            scatter = Scatter(pos = slide.slide.pos)
+                            scatter = Scatter()
                             sButton = soundButton()
                             sButton.addSound(child['source'])
                             scatter.add_widget(sButton)
                             widget.add_widget(scatter)
-                widget.center = slide.slide.center
                 print(widget.children)
                 slide.slide.add_widget(widget)
                 self.addSlide(slide)
