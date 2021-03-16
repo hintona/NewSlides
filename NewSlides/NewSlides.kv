@@ -1,3 +1,5 @@
+#:import Factory kivy.factory.Factory
+
 WindowManager:
     HomeWindow:
     MainWindow:
@@ -5,17 +7,13 @@ WindowManager:
 <HomeWindow>:
     name: "home"
     FloatLayout:
-        Button:
-            text: "App Logo"
+        Label:
             size_hint: (.3,.3)
             pos: root.width/2-300,root.height/2+100
-        Label:
-            size_hint:(.2,.2)
-            text: "New Slides"
-            pos: root.width/2-200, root.height/2
-            text_size: self.size
-            halign: "center"
-            font_size: 50
+            Image:
+                source: "images/NewSlidesLogo.png"
+                pos: self.parent.pos
+                size: self.parent.size
         FlatButtonLow:
             text: "New"
             font_size: 30
@@ -51,39 +49,24 @@ WindowManager:
             size_hint: (1, .27)
             BoxLayout:
                 size_hint: (.15, 1)
-                BoxLayout:
-                    size_hint: (.3,1)
-                    Image:
-                        source: "images/wifi_signal.png"
                 GridLayout:
                     cols: 2
-                    rows: 2
                     size_hint: (.7, 1)
                     spacing: 10
                     padding: 10
                     FlatButtonLow:
                         text: "Save"
                         color: 37/255,14/255,98/255,1
+                        on_press: root.saveSlides()
                         Image:
                             source: "images/save_icon.png"
                             center: self.parent.center
                     FlatButtonLow:
                         text: "Open"
                         color: 37/255,14/255,98/255,1
+                        on_release: root.open_popup()
                         Image:
                             source: "images/open_icon.png"
-                            center: self.parent.center
-                    FlatButtonLow:
-                        text: "Undo"
-                        color: 37/255,14/255,98/255,1
-                        Image:
-                            source: "images/undo_icon.png"
-                            center: self.parent.center
-                    FlatButtonLow:
-                        text: "Redo"
-                        color: 37/255,14/255,98/255,1
-                        Image:
-                            source: "images/redo_icon.png"
                             center: self.parent.center
             GridLayout:
                 size_hint: (.15, 1)
@@ -93,12 +76,45 @@ WindowManager:
                 spacing: 5
                 FlatButton:
                     id: slideCount
+                    size_hint: 1,.3
                     text: "Slide Count: 0/0"
                     color: 37/255,14/255,98/255,1
+                GridLayout:
+                    size_hint: 1,.35
+                    rows: 3
+                    Label:
+                        text: "Change Text Properties"
+                        size_hint: 1,.3
+                    BoxLayout:
+                        size_hint: 1,.7
+                        orientation: "horizontal"
+                        FlatButton:
+                            id: fontsize
+                            text: "50"
+                            color: 37/255,14/255,98/255,1
+                            size_hint: .6,1
+                        FlatButton:
+                            text: "-"
+                            color: 37/255,14/255,98/255,1
+                            size_hint: .2,1
+                            on_release: root.decreaseFontSize()
+                        FlatButton:
+                            text: "+"
+                            color: 37/255,14/255,98/255,1
+                            size_hint: .2,1
+                            on_release: root.increaseFontSize()
+                Spinner:
+                    id: font
+                    size_hint: 1,.35
+                    background_normal: ""
+                    color: 37/255,14/255,98/255,1
+                    text: "Normal"
+                    values: ["Arial","TNR","IDK"]
+                    on_text: root.changeFont(font.text)
             GridLayout:
                 rows: 2
                 cols: 1
-                size_hint: (.35, 1)
+                size_hint: (.7, 1)
                 padding:10
                 spacing: 10
                 canvas.before:
@@ -116,92 +132,50 @@ WindowManager:
                     padding: 10
                     spacing: 10
                     size_hint: (1,0.8)
-                    cols: 6
+                    cols: 3
                     rows: 1
-                    FlatButtonLow:
-                        text: "Text"
-                        color: 37/255,14/255,98/255,1
-                        Image:
-                            source: "images/text_icon.png"
-                            center: self.parent.center
                     FlatButtonLow:
                         text: "Image"
                         color: 37/255,14/255,98/255,1
+                        on_release: root.open_popup()
                         Image:
                             source: "images/camera_icon.png"
                             center: self.parent.center
                     FlatButtonLow:
                         text: "Video"
                         color: 37/255,14/255,98/255,1
+                        on_release: root.open_popup()
                         Image:
                             source: "images/video_icon.png"
                             center: self.parent.center
                     FlatButtonLow:
                         text: "SoundEffects"
                         color: 37/255,14/255,98/255,1
+                        on_release: root.open_popup()
                         Image:
                             source: "images/sound_icon.png"
                             center: self.parent.center
-                    FlatButtonLow:
-                        text: "Equation"
-                        color: 37/255,14/255,98/255,1
-                        Image:
-                            source: "images/equation_icon.png"
-                            center: self.parent.center
-                    FlatButtonLow:
-                        text: "PythonCode"
-                        color: 37/255,14/255,98/255,1
-                        Image:
-                            source: "images/python_icon.png"
-                            center: self.parent.center
-            BoxLayout:
-                size_hint: (.35, 1)
+            GridLayout:
+                padding: 5
                 spacing: 10
-                GridLayout:
-                    padding: 20
-                    spacing: 10
-                    cols: 1
-                    rows: 3
-                    size_hint: (.4, 1)
-                    canvas.before:
-                        Line:
-                            rectangle:(self.pos[0]+5, self.pos[1]+10, self.size[0]-15, self.size[1]-15)
-                            width: 1.5
-                    Label:
-                        #padding:10
-                        text: "Slide"
-                        text_size: self.size
-                        halign: "left"
-                        valign: "top"
-                        font_size: 30
-                    FlatButton:
-                        text: "Templates"
-                        color: 37/255,14/255,98/255,1
-                    FlatButton:
-                        text: "Background"
-                        color: 37/255,14/255,98/255,1
-                GridLayout:
-                    padding: 5
-                    spacing: 10
-                    cols: 1
-                    rows: 3
-                    size_hint: (.6, 1)
-                    FlatButton:
-                        size_hint: (1, .4)
-                        text: "Settings"
-                        text_size: self.size
-                        halign: "left"
-                        valign: "center"
-                        color: 37/255,14/255,98/255,1
-                        Image:
-                            source: "images/settings_icon.png"
-                            center: self.parent.center
-                    FlatButtonLow:
-                        text: "Present"
-                        color: 37/255,14/255,98/255,1
-                        Image:
-                            source: "images/present_icon.png"
-                            center: self.parent.center
+                cols: 1
+                rows: 3
+                size_hint: (.3, 1)
+                FlatButton:
+                    size_hint: (1, .4)
+                    text: "Export to PDF"
+                    text_size: self.size
+                    halign: "center"
+                    valign: "center"
+                    color: 37/255,14/255,98/255,1
+                    on_release: root.exportToPDF()
+                FlatButtonLow:
+                    text: "Present"
+                    color: 37/255,14/255,98/255,1
+                    on_press: root.present()
+                    Image:
+                        source: "images/present_icon.png"
+                        center: self.parent.center
         BoxLayout:
             BoxLayout:
                 size_hint: (.2, 1)
@@ -228,8 +202,26 @@ WindowManager:
             BoxLayout:
                 padding: 10
                 size_hint: (.8, 1)
-                TextInput:
-                    text: ""
+                orientation: "vertical"
+                spacing: 10
+                padding: 10
+                Label:
+                    id: slide
+                    size_hint: (1, .85)
+                GridLayout:
+                    cols: 2
+                    spacing: 5
+                    size_hint: (1, .15)
+                    TextInput:
+                        id: textInput
+                        size_hint: (.8, 1)
+                        text: "Enter your text here!"
+                    FlatButton:
+                        size_hint: (.2, 1)
+                        text: "Add Text!"
+                        color: 37/255,14/255,98/255,1
+                        on_press: root.AddText()
+
 
 <FlatButtonLow@Button>
     background_normal: ""
@@ -251,34 +243,101 @@ WindowManager:
             rectangle:(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
 <SlideView>
-    cols: 5
-    rows: 1
+    cols: 2
     spacing: 5
     size_hint_y: None
     height: 200
-    Label:
+    FlatButton:
         id: count
-        text: root.getSlideCount()
-        size_hint: .05,1
-    Button:
-        text: "slide image"
-        size_hint: .54,1
-    Button:
-        size_hint: .15, 1
-        background_normal: ""
-        on_press: root.duplicateSlide(self)
-        Image:
-            source: "images/duplicate_icon.png"
-            center: self.parent.center
-    Button:
-        size_hint: .15, 1
-        background_normal: ""
-        on_press: root.removeSlide()
-        Image:
-            source: "images/delete_icon.png"
-            center: self.parent.center
-    CheckBox:
-        id: checkbox
-        active: True
-        size_hint: .09,1
-        on_press: root.changeSlideCount(self)
+        text: "Slide " + root.getSlideCount()
+        color: 37/255,14/255,98/255,1
+        font_size: 25
+        size_hint: 1,1
+        on_press: root.select()
+    GridLayout:
+        size_hint: .4, 1
+        rows: 3
+        Button:
+            size_hint: 1, .6
+            background_normal: ""
+            on_press: root.removeSlide()
+            text_size: self.size
+            text: "Delete"
+            halign: "center"
+            valign: "bottom"
+            color: 37/255,14/255,98/255,1
+            Image:
+                source: "images/delete_icon.png"
+                center: self.parent.center
+        Label:
+            text: "Include Slide Count"
+            size_hint: 1,.1
+            font_size: 13
+        CheckBox:
+            id: checkbox
+            active: True
+            size_hint: 1,.3
+            on_press: root.changeSlideCount(self)
+
+<FilePopup>
+    id: filechooser
+    auto_dismiss: False
+    title: "File Explorer"
+    BoxLayout:
+        orientation: "vertical"
+        FileChooserIconView:
+            id: filechooser
+            size_hint: 1,0.8
+        BoxLayout:
+            size_hint: 1,.2
+            orientation: "vertical"
+            BoxLayout:
+                Button:
+                    text: "Open Image"
+                    on_release: root.load(filechooser.selection, "image")
+                    id: ldbtn
+                    #disabled: True if filechooser.selection==[] else False
+                Button:
+                    text: "Open Sound"
+                    on_release: root.load(filechooser.selection, "audio")
+                Button:
+                    text: "Open Video"
+                    on_release: root.load(filechooser.selection, "video")
+                Button:
+                    text: "Open Presentation"
+                    on_release: root.load(filechooser.path, "presentation")
+            Button:
+                text: "Close Window"
+                on_release: root.dismiss()
+
+<PresentationWindow>
+    id: pWindow
+    auto_dismiss: False
+    title: "Presentation"
+    GridLayout:
+        cols: 2
+        BoxLayout:
+            size_hint: .2,1
+            orientation: "vertical"
+            Button:
+                text: "Back"
+                on_release: root.back()
+            Button:
+                text: "Next"
+                on_release: root.next()
+        Label:
+            size_hint: .8,1
+            id: slideDisplay
+            text: "Slide"
+
+<SoundButton>
+    text: "Play Sound"
+    on_release: root.play()
+
+<Slide>
+    canvas.before:
+        Rectangle:
+            id: background
+            pos: self.pos
+            size: self.size
+            source: 'images/default_image.png'

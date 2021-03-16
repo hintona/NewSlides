@@ -1,0 +1,9 @@
+{
+  "Scatter": [
+    {
+      "type": "Label",
+      "text": "hello",
+      "fontsize": 20
+    }
+  ]
+}
