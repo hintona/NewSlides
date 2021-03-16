@@ -233,7 +233,7 @@ class MainWindow(Screen, Widget):
             print(self.file_path)
             self.fileSelector.dismiss()
             if (type == "image"):
-                formats = ["PNG","JPEG",]
+                formats = ["PNG","JPEG","GIF"]
                 for format in formats:
                     if format in self.file_path:
                         image = Image(source=self.file_path)
