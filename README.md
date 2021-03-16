@@ -19,5 +19,5 @@ Instructions placeholder
 **TroubleShooting**
 - If you were not able to run the installNewSlides.sh file by clicking on it, you can run the file from the terminal 
 - To do so, open your terminal and type the following commands. You may be prompted to enter your password, this is normal. 
-> cd ~/Downloads/NewSlides-main/NewSlides
+> cd ~/Downloads/NewSlides-main/NewSlides<br>
 > sh installNewSlides.sh
