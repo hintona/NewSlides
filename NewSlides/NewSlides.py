@@ -235,7 +235,7 @@ class MainWindow(Screen, Widget):
             if (type == "image"):
                 formats = ["PNG","JPEG","GIF"]
                 for format in formats:
-                    if format in self.file_path:
+                    if (format in self.file_path or format.lower() in self.file_path):
                         image = Image(source=self.file_path)
                         scatter = Scatter(center=currSlide.center)
                         scatter.add_widget(image)
@@ -243,7 +243,7 @@ class MainWindow(Screen, Widget):
             elif (type == "video"):
                 formats = ["MP4", "M4V", "AVI"]
                 for format in formats:
-                    if format in self.file_path:
+                    if (format in self.file_path or format.lower() in self.file_path):
                         video = VideoPlayer(source=self.file_path, allow_fullscreen="false")
                         scatter = Scatter(center=currSlide.center)
                         scatter.add_widget(video)
@@ -251,20 +251,18 @@ class MainWindow(Screen, Widget):
             elif (type == "audio"):
                 formats = ["MP3", "WAV"]
                 for format in formats:
-                    if format in self.file_path:
+                    if (format in self.file_path or format.lower() in self.file_path):
                         sButton = soundButton()
                         sButton.addSound(SoundLoader.load(self.file_path))
                         sButton.y = currSlide.center[1]+currSlide.height/3.3
                         sButton.x = currSlide.center[0]+currSlide.width/3.3
                         currSlide.add_widget(sButton)
             elif (type == "presentation"):
-                print(selection)
-                #try:
-                folder = selection
-                print(folder)
-                self.loadSlides(folder)
-                #except:
-                    #print("Wrong File Format")
+                try:
+                    folder = selection
+                    self.loadSlides(folder)
+                except:
+                    print("Wrong File Format")
 
     def increaseFontSize(self):
         global fontSize
