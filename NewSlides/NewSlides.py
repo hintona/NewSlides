@@ -12,6 +12,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
+from kivy.core.text import LabelBase
 from kivy.uix.popup import Popup
 from kivy.uix.scatter import Scatter
 from kivy.uix.textinput import TextInput
@@ -25,6 +26,7 @@ from kivy.uix.filechooser import FileChooserIconView
 from copy import copy
 
 #ns = Builder.load_file("NewSlides.kv")
+
 class FilePopup(Popup):
     load = ObjectProperty()
 
@@ -111,7 +113,7 @@ class SlideView(GridLayout, Widget):
             numSlides -= 1
         slideView.text = "Slide Count: " + str(numSlides-slidesUnselected) + "/" + str(numSlides)
         for i in range(len(grid.children)):
-            grid.children[len(grid.children)-i-1].ids.count.text = str(i+1)
+            grid.children[len(grid.children)-i-1].ids.count.text = "Slide " + str(i)
 
     def select(self):
         global slides
@@ -188,47 +190,66 @@ class MainWindow(Screen, Widget):
         if(numSlides>1):
             currSlide.remove_widget(slides[1])
         currSlide.add_widget(slide.slide)
-        slide.export_to_png(slideName)
         grid.parent.scroll_to(grid.children[0])
         count.text = "Slide Count: " + str(numSlides-slidesUnselected) + "/" + str(numSlides)
 
     def present(self):
         slideView = self.ids.slides.children
-        self.pWindow = PresentationWindow()
-        self.pWindow.open()
-        self.pWindow.addSlideDeck(slideView)
+        if(len(slideView)>0):
+            self.pWindow = PresentationWindow()
+            self.pWindow.open()
+            self.pWindow.addSlideDeck(slideView)
+
     def open_popup(self):
         self.fileSelector = FilePopup(load=self.load)
         self.fileSelector.open()
+
+    def spinner_clicked(self, font):
+        regfont = self.ids.fontsize
+        if(font == "Bengali"):
+            self.ids.textInput.font_name = font
+        else:
+            self.ids.textInput.font_name = regfont.font_name
 
     def load(self, selection, type):
         global slides
         if (len(selection)>0 and len(slides)>0):
             currSlide = slides[0]
             self.file_path = selection[0]
+            print(self.file_path)
             self.fileSelector.dismiss()
             if (type == "image"):
-                image = Image(source=self.file_path)
-                scatter = Scatter(center=currSlide.center)
-                scatter.add_widget(image)
-                currSlide.add_widget(scatter)
+                formats = ["PNG","JPEG",]
+                for format in formats:
+                    if format in self.file_path:
+                        image = Image(source=self.file_path)
+                        scatter = Scatter(center=currSlide.center)
+                        scatter.add_widget(image)
+                        currSlide.add_widget(scatter)
             elif (type == "video"):
-                video = VideoPlayer(source=self.file_path, allow_fullscreen="false")
-                scatter = Scatter(center=currSlide.center)
-                scatter.add_widget(video)
-                currSlide.add_widget(scatter)
+                formats = ["MP4", "M4V", "AVI"]
+                for format in formats:
+                    if format in self.file_path:
+                        video = VideoPlayer(source=self.file_path, allow_fullscreen="false")
+                        scatter = Scatter(center=currSlide.center)
+                        scatter.add_widget(video)
+                        currSlide.add_widget(scatter)
             elif (type == "audio"):
-                sButton = soundButton()
-                sButton.addSound(SoundLoader.load(self.file_path))
-                #sButton.pos_x = currSlide.x
-                #sButton.pos_y = currSlide.y
-                sButton.y = currSlide.center[1]+currSlide.height/3.3
-                sButton.x = currSlide.center[0]+currSlide.width/3.3
-                currSlide.add_widget(sButton)
-                print(sButton.center)
+                formats = ["MP3", "WAV"]
+                for format in formats:
+                    if format in self.file_path:
+                        sButton = soundButton()
+                        sButton.addSound(SoundLoader.load(self.file_path))
+                        sButton.y = currSlide.center[1]+currSlide.height/3.3
+                        sButton.x = currSlide.center[0]+currSlide.width/3.3
+                        currSlide.add_widget(sButton)
             elif (type == "presentation"):
-                folder = selection
-                self.loadSlides(folder)
+                print(selection)
+                try:
+                    folder = selection
+                    self.loadSlides(folder)
+                except:
+                    print("Wrong File Format")
 
     def increaseFontSize(self):
         global fontSize
@@ -278,14 +299,16 @@ class MainWindow(Screen, Widget):
             image.save(slideImages + "Slide" + str(i) + ".png")
 
     def exportToPDF(self):
-        self.exportToPNG()
-        imagesPath = os.path.dirname(__file__)+"/slideImages/"
-        slideImages = os.listdir(imagesPath)
-        pdf = FPDF()
-        for i in range(len(slideImages)):
-            pdf.add_page(orientation="P")
-            pdf.image(imagesPath+slideImages[i])
-        pdf.output("Presentation.pdf", "F")
+        slides = self.getSlides()
+        if(len(slides)>0):
+            self.exportToPNG()
+            imagesPath = os.path.dirname(__file__)+"/slideImages/"
+            slideImages = os.listdir(imagesPath)
+            pdf = FPDF()
+            for i in range(len(slideImages)):
+                pdf.add_page(orientation="P")
+                pdf.image(imagesPath+slideImages[i])
+            pdf.output("Presentation.pdf", "F")
     def saveSlides(self):
         slides = self.getSlides()
         slides = slides[::-1]
@@ -384,6 +407,7 @@ class MainWindow(Screen, Widget):
             AddedText = Label(text=self.ids.textInput.text, color="black")
             # AddedText.font_name = 'Bengal'
             AddedText.bold = True
+            AddedText.font_name = self.ids.textInput.font_name
             AddedText.font_size = fontSize
             scatter.add_widget(AddedText)
             currSlide.add_widget(scatter)
@@ -410,6 +434,7 @@ class Slide(Widget):
         AddedText = Label(text='Enter your text here')
         #AddedText.font_name = 'Bengal'
         AddedText.bold = True
+        AddedText.font_name = self.textInput.font.font_name
         TextAddition = TextInput(text='Enter your text here')
         FontSize = self.ids.FontSize
         FontSize.bind(text=AddedText.setter("font_size"))

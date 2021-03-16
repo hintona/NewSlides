@@ -91,6 +91,18 @@ WindowManager:
                             color: 37/255,14/255,98/255,1
                             size_hint: .2,1
                             on_release: root.increaseFontSize()
+                    Spinner:
+                        id: font
+                        text: "Text Font"
+                        values: ["Bengali", "English"]
+                        on_text: root.spinner_clicked(font.text)
+                        background_normal: ""
+                        color: 37/255,14/255,98/255,1
+                        canvas.before:
+                            Color:
+                                rgba: (24/255,69/255,233/255, 1)
+                            Line:
+                                rectangle:(self.pos[0], self.pos[1], self.size[0], self.size[1])
             GridLayout:
                 rows: 2
                 cols: 1
@@ -275,8 +287,6 @@ WindowManager:
                 Button:
                     text: "Open Image"
                     on_release: root.load(filechooser.selection, "image")
-                    id: ldbtn
-                    #disabled: True if filechooser.selection==[] else False
                 Button:
                     text: "Open Sound"
                     on_release: root.load(filechooser.selection, "audio")
