@@ -19,23 +19,11 @@ WindowManager:
             font_size: 30
             color: 37/255,14/255,98/255,1
             size_hint: (.2,.2)
-            pos: root.width/2-450, root.height/2-300
+            pos: root.width/2-200, root.height/2-200
             on_press:
                 app.root.current = "main"
             Image:
                 source: "images/new_file.png"
-                center_x: self.parent.center_x
-                center_y: self.parent.center_y
-        FlatButtonLow:
-            text: "Open"
-            font_size: 30
-            color: 37/255,14/255,98/255,1
-            size_hint: (.2,.2)
-            pos: root.width/2, root.height/2-300
-            on_release:
-                root.buttonAnimFin(self)
-            Image:
-                source: "images/open_file.png"
                 center_x: self.parent.center_x
                 center_y: self.parent.center_y
 
@@ -103,14 +91,6 @@ WindowManager:
                             color: 37/255,14/255,98/255,1
                             size_hint: .2,1
                             on_release: root.increaseFontSize()
-                Spinner:
-                    id: font
-                    size_hint: 1,.35
-                    background_normal: ""
-                    color: 37/255,14/255,98/255,1
-                    text: "Normal"
-                    values: ["Arial","TNR","IDK"]
-                    on_text: root.changeFont(font.text)
             GridLayout:
                 rows: 2
                 cols: 1
