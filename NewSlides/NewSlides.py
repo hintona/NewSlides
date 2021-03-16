@@ -257,7 +257,8 @@ class MainWindow(Screen, Widget):
                         sButton.y = currSlide.center[1]+currSlide.height/3.3
                         sButton.x = currSlide.center[0]+currSlide.width/3.3
                         currSlide.add_widget(sButton)
-            elif (type == "presentation"):
+        if(len(selection)>0):
+            if (type == "presentation"):
                 try:
                     folder = selection
                     self.loadSlides(folder)

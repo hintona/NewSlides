@@ -1,0 +1,9 @@
+{
+  "Scatter": [
+    {
+      "type": "Label",
+      "text": "Enter your text here!",
+      "fontsize": 50
+    }
+  ]
+}
