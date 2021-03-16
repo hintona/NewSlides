@@ -104,15 +104,20 @@ class SlideView(GridLayout, Widget):
         grid = self.parent
         grid.remove_widget(self)
         print(len(slides))
-        if(len(slides)>=1):
-            if(slides[0].parent!=None):
-                slides[0].parent.remove_widget(slides[0])
-            slideContainer.add_widget(slides[0])
         if(self.ids.checkbox.active):
             numSlides -= 1
         else:
             slidesUnselected -= 1
             numSlides -= 1
+        if (len(slides) >= 1):
+            if (slides[0].parent != None):
+                slides[0].parent.remove_widget(slides[0])
+            slideContainer.add_widget(slides[0])
+            print(len(slides))
+            print(len(slideContainer.children))
+        if(numSlides<=0 and len(slideContainer.children)>0):
+            print("yes")
+            slideContainer.remove_widget(slideContainer.children[0])
         slideView.text = "Slide Count: " + str(numSlides-slidesUnselected) + "/" + str(numSlides)
         for i in range(len(grid.children)):
             grid.children[len(grid.children)-i-1].ids.count.text = "Slide " + str(i)
