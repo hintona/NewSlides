@@ -12,6 +12,6 @@ echo "Dependencies installed"
 printf "\nName=NewSlides\nIcon=/home/"$USER"/NewSlides-main/NewSlides/images/newSlidesIcon.png\nExec=/usr/bin/python3 /home/"$USER"/NewSlides-main/NewSlides/NewSlides.py\nType=Application\nEncoding=UTF-8\nVersion=1.0\nTerminal=false\nCategories=Office;" >> newSlides.desktop
 
 #moves files to the home directory and provides an icon
-mv ~/Downloads/NewSlides-main/NewSlides/newslides.desktop ~/.local/share/applications
+mv ~/Downloads/NewSlides-main/NewSlides/newSlides.desktop ~/.local/share/applications
 mv ~/Downloads/NewSlides-main ~/
 echo "Operation successful! Thank you for installing New Slides!" 
