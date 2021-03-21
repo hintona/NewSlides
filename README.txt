@@ -5,7 +5,10 @@ To install NewSlides on your Windows or RaspberryPi machine, follow the directio
 - Download the package and place in your Downloads folder
 - Right click on the NewSlides-main.zip file
 - Click "Extract Here"
-- Once extracted, double click on NewSlides-Windows.exe to run
+- Once extracted, navigate to the 'NewSlides' folder by double clicking
+- Now navigate to the 'dist' folder by double clicking
+- Double click the 'newSlides' folder
+- Scroll down to 'NewSlidesApp', and double click it to run
 
 #### RaspberryPi Installation
 - Download the package and place in your Downloads folder
