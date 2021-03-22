@@ -8,10 +8,10 @@ python3 pip install fpdf
 echo "Dependencies installed"
 
 #Creates desktop shortcut
-#!/bin/bash
 printf "\nName=NewSlides\nIcon=/home/"$USER"/NewSlides-main/NewSlides/images/newSlidesIcon.png\nExec=/usr/bin/python3 /home/"$USER"/NewSlides-main/NewSlides/NewSlides.py\nType=Application\nEncoding=UTF-8\nVersion=1.0\nTerminal=false\nCategories=Office;" >> newSlides.desktop
 
-#moves files to the home directory and provides an icon
+#moves the desktop shortcut to the /.local/share/applications folder
 mv ~/Downloads/NewSlides-main/NewSlides/newSlides.desktop ~/.local/share/applications
+#moves everything to the home folder for convenience
 mv ~/Downloads/NewSlides-main ~/
 echo "Operation successful! Thank you for installing New Slides!" 
